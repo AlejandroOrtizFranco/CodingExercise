@@ -1,0 +1,10 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c413bf03_002Db0ba_002D4521_002D8fb6_002D656249c32b2b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetProducts_ShouldReturn_ListOfProducts" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::04CECAA8-8595-49A5-AFE9-3A392BAB9897::net6.0::ToysAndGames.Tests.ProductServiceTests.GetProducts_ShouldReturn_ListOfProducts&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::04CECAA8-8595-49A5-AFE9-3A392BAB9897::net6.0::ToysAndGames.Tests.ProductServiceTests.CreateProduct_ShouldThrownException_When_PriceInvalid&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::04CECAA8-8595-49A5-AFE9-3A392BAB9897::net6.0::ToysAndGames.Tests.ProductServiceTests.UpdateProduct_ShouldUpdateProduct_InContext&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::04CECAA8-8595-49A5-AFE9-3A392BAB9897::net6.0::ToysAndGames.Tests.ProductServiceTests.DeleteProduct_ShouldDeleteProduct_InContext&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::04CECAA8-8595-49A5-AFE9-3A392BAB9897::net6.0::ToysAndGames.Tests.ProductServiceTests.GetProducts_ShouldNotBeEmpty&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
