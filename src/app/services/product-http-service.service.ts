@@ -7,25 +7,23 @@ import {HttpClient} from '@angular/common/http';
 })
 export class ProductHttpServiceService {
 
-
-
   constructor(private http: HttpClient) { }
 
-  url = 'http://localhost:22946/api/products/';
+  url = 'http://localhost:22946/api/products';
 
   getProducts(){
     return this.http.get<any>(`${this.url}`);
   }
 
   createProduct(product:Product){
-    return this.http.post<any>(`${this.url}create`, product);
+    return this.http.post<any>(`${this.url}`, product);
   }
 
   updateProduct(product:Product){
-    return this.http.post<any>(`${this.url}update`,product);
+    return this.http.put<any>(`${this.url}`,product);
   }
 
   deleteProduct(id: number){
-    return this.http.delete<any>(`${this.url}delete/${id}`);
+    return this.http.delete<any>(`${this.url}/${id}`);
   }
 }
