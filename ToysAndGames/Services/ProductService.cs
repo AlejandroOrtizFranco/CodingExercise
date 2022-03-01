@@ -1,5 +1,7 @@
 ﻿using System.Data.Entity.Migrations;
+using Microsoft.EntityFrameworkCore;
 using ToysAndGames.DbContext;
+using ToysAndGames.Dtos;
 using ToysAndGames.Interfaces;
 using ToysAndGames.Models;
 
@@ -13,33 +15,62 @@ namespace ToysAndGames.Services
         {
             _context = context;
         }
-        public List<Product> GetProducts()
+        public async Task<List<ProductDto>> GetProducts()
         {
-            return _context.Products.ToList();
+            var products = await _context.Products.ToListAsync();
+
+            var productsDto = products.Select(p => new ProductDto
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Description = p.Description,
+                AgeRestriction = p.AgeRestriction,
+                Company = p.Company,
+                Price = p.Price
+            });
+
+            return productsDto.ToList();
         }
 
-        public void CreateProduct(Product product)
+        public async Task<int> CreateProduct(ProductDto product)
         {
-            _context.Products.Add(product);
-            _context.SaveChanges();
+            var newProduct = new Product
+            {
+                Name = product.Name,
+                Description = product.Description,
+                AgeRestriction = product.AgeRestriction,
+                Company = product.Company,
+                Price = product.Price
+            };
+            await _context.Products.AddAsync(newProduct);
+            await _context.SaveChangesAsync();
+            return product.Id;
         }
 
-        public void DeleteProduct(int productId)
+        public async Task DeleteProduct(int productId)
         {
-            var product = _context.Products.FirstOrDefault(p => p.Id == productId);
+            var product = await _context.Products.SingleOrDefaultAsync(p => p.Id == productId);
+            if (product is null)
+            {
+                throw new ArgumentNullException();
+            }
             _context.Products.Remove(product);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void UpdateProduct(Product product)
+        public async Task UpdateProduct(ProductDto product)
         {
-            var productToUpdate = _context.Products.FirstOrDefault(x => product.Id == x.Id );
+            var productToUpdate = _context.Products.SingleOrDefault(x => product.Id == x.Id );
+            if (product is null)
+            {
+                throw new ArgumentNullException();
+            }
             productToUpdate.Name = product.Name;
             productToUpdate.Description = product.Description;
             productToUpdate.Price = product.Price;
             productToUpdate.AgeRestriction = product.AgeRestriction;
             productToUpdate.Company = product.Company;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

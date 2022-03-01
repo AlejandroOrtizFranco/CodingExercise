@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ToysAndGames.Dtos;
 using ToysAndGames.Interfaces;
 using ToysAndGames.Models;
 
@@ -17,27 +18,31 @@ namespace ToysAndGames.Controllers
         }
 
         [HttpGet]
-        public List<Product> GetProducts()
+        public async Task<IActionResult> GetProducts()
         {
-            return _service.GetProducts();
+            var result = await _service.GetProducts();
+            return Ok(result);
         }
 
-        [HttpPost("Create")]
-        public void CreateProduct(Product product)
+        [HttpPost]
+        public async Task<IActionResult> CreateProduct(ProductDto product)
         {
-            _service.CreateProduct(product);
+            var result = await _service.CreateProduct(product);
+            return Ok(result);
         }
 
-        [HttpDelete("Delete/{id}")]
-        public void DeleteProduct(int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProduct(int id)
         {
-            _service.DeleteProduct(id);
+            await _service.DeleteProduct(id);
+            return Ok();
         }
 
-        [HttpPost("Update")]
-        public void UpdateProduct(Product product)
+        [HttpPut]
+        public async Task<IActionResult> UpdateProduct(ProductDto product)
         {
-            _service.UpdateProduct(product);
+            await _service.UpdateProduct(product);
+            return Ok();
         }
 
 

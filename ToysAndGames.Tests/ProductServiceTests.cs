@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Moq;
 using ToysAndGames.DbContext;
+using ToysAndGames.Dtos;
 using ToysAndGames.Models;
 using ToysAndGames.Services;
 using Xunit;
@@ -23,42 +25,52 @@ namespace ToysAndGames.Tests
             _productService = fixture;
         }
         [Fact]
-        public void GetProducts_ShouldReturn_ListOfProducts()
+        public async Task GetProducts_ShouldReturn_ListOfProducts()
         {
-            var result = Service.GetProducts();
-            Assert.IsType<List<Product>>(result);
+            var result = await Service.GetProducts();
+            Assert.IsType<List<ProductDto>>(result);
         }
 
         [Fact]
-        public void GetProducts_ShouldNotBeEmpty()
+        public async Task GetProducts_ShouldNotBeEmpty()
         {
-            var result = Service.GetProducts();
+            var result = await Service.GetProducts();
             Assert.NotEmpty(result);
         }
 
 
         [Fact]
-        public void CreateProduct_ShouldAddProduct_ToContext()
+        public async Task CreateProduct_ShouldAddProduct_ToContext()
         {
             var count = Context.Products.Count();
-            var newProduct = new Product
+            var newProduct = new ProductDto
                 { Name = "Test Toy", Description = "Test", AgeRestriction = 12, Company = "xUnit", Price = 20M };
 
-            Service.CreateProduct(newProduct);
+            await Service.CreateProduct(newProduct);
             var newCount = Context.Products.Count();
 
             Assert.NotEqual(count,newCount);
         }
 
         [Fact]
-        public void UpdateProduct_ShouldUpdateProduct_InContext()
+        public async Task UpdateProduct_ShouldUpdateProduct_InContext()
         {
             var productToUpdate = Context.Products.First();
 
             productToUpdate.Name = "Barbie Test";
             productToUpdate.Description = "Test";
 
-            Service.UpdateProduct(productToUpdate);
+            var product = new ProductDto
+            {
+                Id = productToUpdate.Id,
+                Name = productToUpdate.Name,
+                Description = productToUpdate.Description,
+                AgeRestriction = productToUpdate.AgeRestriction,
+                Company = productToUpdate.Company,
+                Price = productToUpdate.Price
+            };
+
+            await Service.UpdateProduct(product);
 
             var updatedProduct = Context.Products.First();
 
@@ -66,12 +78,12 @@ namespace ToysAndGames.Tests
         }
 
         [Fact]
-        public void DeleteProduct_ShouldDeleteProduct_InContext()
+        public async Task DeleteProduct_ShouldDeleteProduct_InContext()
         {
             var count = Context.Products.Count();
             var productToDelete = Context.Products.First();
 
-            Service.DeleteProduct(productToDelete.Id);
+            await Service.DeleteProduct(productToDelete.Id);
             var newCount = Context.Products.Count();
 
             Assert.NotEqual(count,newCount);

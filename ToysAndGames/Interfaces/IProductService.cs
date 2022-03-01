@@ -1,12 +1,13 @@
-﻿using ToysAndGames.Models;
+﻿using ToysAndGames.Dtos;
+using ToysAndGames.Models;
 
 namespace ToysAndGames.Interfaces
 {
     public interface IProductService
     {
-        public List<Product> GetProducts();
-        public void CreateProduct(Product product);
-        public void DeleteProduct(int productId);
-        public void UpdateProduct(Product product);
+        Task<List<ProductDto>> GetProducts();
+        Task<int> CreateProduct(ProductDto product);
+        Task DeleteProduct(int productId);
+        Task UpdateProduct(ProductDto product);
     }
 }
